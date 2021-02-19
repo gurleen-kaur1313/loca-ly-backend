@@ -3,11 +3,11 @@ from django.db import models
 import uuid
 
 class Jobs(models.Model):
-    WORK_CHOICES(
+    WORK_CHOICES = (
         ("Y", "YES"),
         ("N", "NO"),
     )
-    JOBTYPE_CHOICES(
+    JOBTYPE_CHOICES = (
         ("P", "Part time"),
         ("F", "Full time"),
     )
