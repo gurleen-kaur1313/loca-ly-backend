@@ -16,10 +16,10 @@ class Query(graphene.ObjectType):
     alljobs = graphene.List(jobss)
 
     def resolve_alljobs(self, info):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
         return Jobs.objects.all()
-
-  
-
 
 
 
@@ -40,6 +40,8 @@ class AddJob(graphene.Mutation):
 
     def mutate(self, info, **kwargs):
         user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
         jobadd=Jobs.objects.create(user=user)
         jobadd.title = kwargs.get("title")
         jobadd.description = kwargs.get("description")

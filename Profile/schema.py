@@ -24,11 +24,16 @@ class Query(graphene.ObjectType):
     me = graphene.Field(Users)
     myprofile = graphene.Field(MyProfile)
 
-    def resolve_allUsers(self, info, id):
+    def resolve_findUsers(self, info, id):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
         return User.objects.get(id=id)
 
     def resolve_me(self, info):
         user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
         return user
 
     def resolve_myprofile(self, info):
