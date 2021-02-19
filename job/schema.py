@@ -31,8 +31,12 @@ class AddJob(graphene.Mutation):
         description = graphene.String()
         pay = graphene.Int()
         skillsrequired = graphene.String()
+        minimumdesignation = graphene.String()
         mobile = graphene.String()
         location = graphene.String()
+        jobtype = graphene.String()
+        workfromhome = graphene.String()
+
 
     def mutate(self, info, **kwargs):
         user = info.context.user
@@ -41,8 +45,11 @@ class AddJob(graphene.Mutation):
         jobadd.description = kwargs.get("description")
         jobadd.pay = kwargs.get("pay")
         jobadd.skillsrequired = kwargs.get("skillsrequired")
+        jobadd.minimumdesignation = kwargs.get("minimumdesignation")
         jobadd.mobile = kwargs.get("mobile")
         jobadd.location = kwargs.get("location")
+        jobadd.jobtype = kwargs.get("jobtype")
+        jobadd.workfromhome = kwargs.get("workfromhome")
         jobadd.save()
         return AddJob(newjob=jobadd)
 
