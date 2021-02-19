@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Profile',
     'job',
     'security',
+    'pg',
 ]
 
 
