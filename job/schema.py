@@ -13,13 +13,26 @@ class jobss(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    alljobs = graphene.List(jobss)
+    alljobs = graphene.List(jobss,search=graphene.String())
+    onejob = graphene.Field(jobss, job_id=graphene.String())
 
-    def resolve_alljobs(self, info):
+    def resolve_alljobs(self, info, search=None):
         user = info.context.user
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
-        return Jobs.objects.all()
+        if search:
+            filter = Q(title__icontains=search) | Q(description__icontains=search) | Q(skillsrequired__icontains=search) | Q(pay__icontains=search) | Q(minimumdesignation__icontains=search) | Q(location__icontains=search)
+            return Jobs.objects.filter(filter)
+        return Exception("No Job")
+
+
+    def resolve_by_id(root, info, job_id):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
+        return Jobs.objects.get(id=job_id)
+        
+
 
 
 class AddJob(graphene.Mutation):
