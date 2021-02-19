@@ -27,7 +27,8 @@ class Pgs(models.Model):
         ("N", "No"),
     )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created_by = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     usertype = models.CharField(
         max_length=250, choices=USERTYPE_CHOICES, blank=True, null=True
     )
@@ -43,18 +44,14 @@ class Pgs(models.Model):
     laundry_included = models.CharField(
         max_length=250, choices=LAUNDRY_CHOICES, blank=True, null=True
     )
-    rent = models.IntegerField(null=True,blank=True)
-    locality = models.CharField(null=True,blank=True,max_length=250)
-    city = models.CharField(null=True,blank=True,max_length=250)
-    state = models.CharField(null=True,blank=True,max_length=250)
-    url = models.URLField(null=True, blank=True,max_length = 200) 
+    rent = models.IntegerField(null=True, blank=True)
+    locality = models.CharField(null=True, blank=True, max_length=250)
+    city = models.CharField(null=True, blank=True, max_length=250)
+    state = models.CharField(null=True, blank=True, max_length=250)
+    url = models.URLField(null=True, blank=True, max_length=200)
 
     def __str__(self):
         return self.locality
 
     def save(self, *args, **kwargs):
         super(Pgs, self).save(*args, **kwargs)
-
-
-
-

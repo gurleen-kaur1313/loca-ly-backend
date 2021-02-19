@@ -22,7 +22,6 @@ class Query(graphene.ObjectType):
         return Jobs.objects.all()
 
 
-
 class AddJob(graphene.Mutation):
     newjob = graphene.Field(jobss)
 
@@ -37,12 +36,11 @@ class AddJob(graphene.Mutation):
         jobtype = graphene.String()
         workfromhome = graphene.String()
 
-
     def mutate(self, info, **kwargs):
         user = info.context.user
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
-        jobadd=Jobs.objects.create(user=user)
+        jobadd = Jobs.objects.create(user=user)
         jobadd.title = kwargs.get("title")
         jobadd.description = kwargs.get("description")
         jobadd.pay = kwargs.get("pay")
