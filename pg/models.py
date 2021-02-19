@@ -28,7 +28,7 @@ class Pgs(models.Model):
     )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     usertype = models.CharField(
         max_length=250, choices=USERTYPE_CHOICES, blank=True, null=True
     )
