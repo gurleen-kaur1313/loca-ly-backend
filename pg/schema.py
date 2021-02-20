@@ -48,7 +48,6 @@ class AddPG(graphene.Mutation):
 
     def mutate(self, info, **kwargs):
         user = info.context.user
-        location = kwargs.get("location")
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
         pgadd = Pgs.objects.create(created_by=user)
@@ -59,20 +58,7 @@ class AddPG(graphene.Mutation):
         pgadd.laundry_included = kwargs.get("laundry_included")
         pgadd.rent = kwargs.get("rent")
         pgadd.url = kwargs.get("url")
-        try:
-            if location:
-                filter = Q(city__icontains=location) | Q(
-                    state__icontains=location)
-                temp = Location.objects.filter(filter).first()
-            # if temp:
-            #     jobadd.rating=temp
-            # else:
-            #     temp2=Location.objects.create(city=location)
-            #     jobadd.rating=temp2
-        except:
-            temp = Location.objects.create(city=location)
-            temp.save()
-        pgadd.location = temp
+        pgadd.location = kwargs.get("location")
         pgadd.save()
         return AddPG(newpg=pgadd)
 
