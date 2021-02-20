@@ -51,13 +51,12 @@ class AddPG(graphene.Mutation):
         user = info.context.user
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
-        pgadd = Pgs.objects.create(user=user)
+        pgadd = Pgs.objects.create(created_by=user)
         pgadd.usertype = kwargs.get("usertype")
         pgadd.roomtype = kwargs.get("roomtype")
         pgadd.kitchen_available = kwargs.get("kitchen_available")
         pgadd.washroom_attached = kwargs.get("washroom_attached")
         pgadd.laundry_included = kwargs.get("laundry_included")
-        pgadd.description = kwargs.get("description")
         pgadd.rent = kwargs.get("rent")
         pgadd.url = kwargs.get("url")
         try:
