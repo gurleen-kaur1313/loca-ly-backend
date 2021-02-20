@@ -13,10 +13,18 @@ class jobss(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    alljobs = graphene.List(jobss,search=graphene.String())
+    alljobs = graphene.List(jobss)
+    searchjobs = graphene.List(jobss,search=graphene.String())
     onejob = graphene.Field(jobss, job_id=graphene.String())
 
-    def resolve_alljobs(self, info, search=None):
+    def resolve_alljobs(self,info):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
+        return Jobs.objects.all()
+
+
+    def resolve_searchjobs(self, info, search=None):
         user = info.context.user
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
