@@ -28,8 +28,9 @@ class AddPoliceEmergency(graphene.Mutation):
         city = graphene.String()
         locality = graphene.String()
 
-    def mutate(self, info, city, **kwargs):
+    def mutate(self, info, **kwargs):
         user = info.context.user
+        city = kwargs.get("city")
         test = PoliceEmergency.objects.create(user=user)
         test.city = kwargs.get("city")
         test.locality = kwargs.get("locality")
