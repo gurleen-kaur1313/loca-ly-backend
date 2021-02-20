@@ -72,6 +72,7 @@ class AddPG(graphene.Mutation):
             #     jobadd.rating=temp2
         except:
             temp = Location.objects.create(city=location)
+            temp.save()
         pgadd.location = temp
         pgadd.save()
         return AddPG(newpg=pgadd)
