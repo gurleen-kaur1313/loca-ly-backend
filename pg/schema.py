@@ -22,8 +22,7 @@ class Query(graphene.ObjectType):
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
         if search:
-            filter = Q(rent__icontains=search) | Q(location__icontains=search) | Q(
-                city__icontains=search) | Q(state__icontains=search)
+            filter = Q(rent__icontains=search) | Q(location__icontains=search)
             return Pgs.objects.filter(filter)
         return Exception("No PG")
 
