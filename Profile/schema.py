@@ -7,6 +7,7 @@ from graphene_django import DjangoObjectType
 from .models import User, Profile
 from graphql import GraphQLError
 from django.db.models import Q
+from location.models import Location
 
 
 class Users(DjangoObjectType):
@@ -76,6 +77,17 @@ class CreateProfile(graphene.Mutation):
         myProfile.location = kwargs.get("location")
         myProfile.Age = kwargs.get("age")
         myProfile.Gender = kwargs.get("gender")
+        # try:
+        #     if location:
+        #         filter = Q(city__icontains=location) | Q(state__icontains=location) 
+        #     temp = Location.objects.filter(filter).first()
+        #     # if temp:
+        #     #     jobadd.rating=temp
+        #     # else:
+        #     #     temp2=Location.objects.create(city=location)
+        #     #     jobadd.rating=temp2
+        # except:
+        #     temp=Location.objects.create(city=location)
         myProfile.save()
 
         return CreateProfile(profile=myProfile)
@@ -101,6 +113,17 @@ class UpdateProfile(graphene.Mutation):
         myProfile.location = kwargs.get("location")
         myProfile.Age = kwargs.get("age")
         myProfile.Gender = kwargs.get("gender")
+        # try:
+        #     if location:
+        #         filter = Q(city__icontains=location) | Q(state__icontains=location) 
+        #     temp = Location.objects.filter(filter).first()
+        #     # if temp:
+        #     #     jobadd.rating=temp
+        #     # else:
+        #     #     temp2=Location.objects.create(city=location)
+        #     #     jobadd.rating=temp2
+        # except:
+        #     temp=Location.objects.create(city=location)
         myProfile.save()
 
         return UpdateProfile(profile=myProfile)

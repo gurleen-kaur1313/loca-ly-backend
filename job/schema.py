@@ -75,14 +75,19 @@ class AddJob(graphene.Mutation):
         jobadd.jobtype = kwargs.get("jobtype")
         jobadd.workfromhome = kwargs.get("workfromhome")
         try:
-            temp = Location.filter(city=location).first()
-            if temp:
-                jobadd.rating=temp
-            else:
-                temp2=Location.objects.create(city=location)
-                jobadd.rating=temp2
+            if location:
+                filter = Q(city__icontains=location) | Q(state__icontains=location) 
+            temp = Location.objects.filter(filter).first()
+            temp.rating-=1
+            temp.save()
+            # if temp:
+            #     jobadd.rating=temp
+            # else:
+            #     temp2=Location.objects.create(city=location)
+            #     jobadd.rating=temp2
         except:
-            raise GraphQLError("Invalid")
+            temp=Location.objects.create(city=location)
+        jobadd.rating=temp
         jobadd.save()
         return AddJob(newjob=jobadd)
 
