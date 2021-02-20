@@ -43,7 +43,7 @@ class IncrementLocation(graphene.Mutation):
         except:
             temp = Location.objects.create(city=city)
             temp.save()
-        return IncrementLocation(newlocation=temp)
+        return temp
 
 
 class DecrementLocation(graphene.Mutation):
@@ -66,9 +66,10 @@ class DecrementLocation(graphene.Mutation):
         except:
             temp = Location.objects.create(city=city)
             temp.save()
-        return DecrementLocation(newlocation=temp)
+        return temp
 
 
 class Mutation(graphene.ObjectType):
-    increment = IncrementLocation.Field()
-    deccrement = DecrementLocation.Field()
+    # increment = IncrementLocation.Field()
+    # deccrement = DecrementLocation.Field()
+    pass
