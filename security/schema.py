@@ -26,10 +26,22 @@ class AddPoliceEmergency(graphene.Mutation):
     class Arguments:
         location = graphene.String()
 
-    def mutate(self, info, **kwargs):
+    def mutate(self, info,location, **kwargs):
         user = info.context.user
         test = PoliceEmergency.objects.create(user=user)
-        test.location = kwargs.get("location")
+        try:
+            if location:
+                filter = Q(city__icontains=location) | Q(state__icontains=location) 
+            temp = Location.objects.filter(filter).first()
+            temp.rating-=1
+            temp.save()
+            # if temp:
+            #     jobadd.rating=temp
+            # else:
+            #     temp2=Location.objects.create(city=location)
+            #     jobadd.rating=temp2
+        except:
+            temp=Location.objects.create(city=location)
         test.save()
         return AddPoliceEmergency(myEmergency=test)
 
