@@ -21,7 +21,7 @@ class Query(graphene.ObjectType):
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
         if search:
-            filter = Q(rent__icontains=search) | Q(locality__icontains=search) | Q(city__icontains=search) | Q(state__icontains=search)
+            filter = Q(rent__icontains=search) | Q(location__icontains=search) | Q(city__icontains=search) | Q(state__icontains=search)
             return Pgs.objects.filter(filter)
         return Exception("No PG")
 
@@ -46,9 +46,7 @@ class AddPG(graphene.Mutation):
         laundry_included = graphene.String()
         description = graphene.String()
         rent = graphene.Int()
-        locality = graphene.String()
-        city = graphene.String()
-        state = graphene.String()
+        location = graphene.String()
         url = graphene.String()
         
 
@@ -64,9 +62,7 @@ class AddPG(graphene.Mutation):
         pgadd.laundry_included = kwargs.get("laundry_included")
         pgadd.description = kwargs.get("description")
         pgadd.rent = kwargs.get("rent")
-        pgadd.locality = kwargs.get("locality")
-        pgadd.city = kwargs.get("city")
-        pgadd.state = kwargs.get("state")
+        pgadd.location = kwargs.get("location")
         pgadd.url = kwargs.get("url")
         pgadd.save()
         return AddPG(newpg=pgadd)

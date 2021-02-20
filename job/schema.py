@@ -5,12 +5,15 @@ from graphene_django import DjangoObjectType
 from .models import Jobs
 from graphql import GraphQLError
 from django.db.models import Q
-
+from location.models import Location
 
 class jobss(DjangoObjectType):
     class Meta:
         model = Jobs
 
+class locations(DjangoObjectType):
+    class Meta:
+        model = Location
 
 class Query(graphene.ObjectType):
     alljobs = graphene.List(jobss)
@@ -57,7 +60,7 @@ class AddJob(graphene.Mutation):
         jobtype = graphene.String()
         workfromhome = graphene.String()
 
-    def mutate(self, info, **kwargs):
+    def mutate(self, info, location,**kwargs):
         user = info.context.user
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
@@ -71,6 +74,15 @@ class AddJob(graphene.Mutation):
         jobadd.location = kwargs.get("location")
         jobadd.jobtype = kwargs.get("jobtype")
         jobadd.workfromhome = kwargs.get("workfromhome")
+        try:
+            temp = Location.filter(city=location).first()
+            if temp:
+                jobadd.rating=temp
+            else:
+                temp2=Location.objects.create(city=location)
+                jobadd.rating=temp2
+        except:
+            raise GraphQLError("Invalid")
         jobadd.save()
         return AddJob(newjob=jobadd)
 

@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 from django.core.validators import MinValueValidator
 from django.conf import settings
 import uuid
+from location.models import Location
 
 
 class UserProfileManager(BaseUserManager):
@@ -49,8 +50,7 @@ class Profile(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(blank=True,null=True, max_length=250)
     mobile = models.CharField(blank=True, null=True,max_length=16)
-    state = models.TextField(blank=True,null=True, help_text="State : ")
-    city = models.TextField(blank=True,null=True, help_text="City : ")
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
     Age = models.IntegerField(blank=True, validators=[
                               MinValueValidator(0)], null=True)
     Gender = models.CharField(

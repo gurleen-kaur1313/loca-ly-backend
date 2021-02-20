@@ -64,20 +64,15 @@ class CreateProfile(graphene.Mutation):
     class Arguments:
         name = graphene.String()
         mobile = graphene.String()
-        state = graphene.String()
-        city = graphene.String()
+        location = graphene.String()
         age = graphene.Int()
         gender = graphene.String()
 
     def mutate(self, info, **kwargs):
-        user = info.context.user
-        if user.is_anonymous:
-            raise GraphQLError("Not Logged In!")
         myProfile = Profile.objects.create(user=user)
         myProfile.name = kwargs.get("name")
         myProfile.mobile = kwargs.get("mobile")
-        myProfile.state = kwargs.get("state")
-        myProfile.city = kwargs.get("city")
+        myProfile.location = kwargs.get("location")
         myProfile.Age = kwargs.get("age")
         myProfile.Gender = kwargs.get("gender")
         myProfile.save()
@@ -91,8 +86,7 @@ class UpdateProfile(graphene.Mutation):
     class Arguments:
         name = graphene.String()
         mobile = graphene.String()
-        state = graphene.String()
-        city = graphene.String()
+        location = graphene.String()
         age = graphene.Int()
         gender = graphene.String()
 
@@ -103,8 +97,7 @@ class UpdateProfile(graphene.Mutation):
         myProfile = Profile.objects.get(user=user)
         myProfile.name = kwargs.get("name")
         myProfile.mobile = kwargs.get("mobile")
-        myProfile.state = kwargs.get("state")
-        myProfile.city = kwargs.get("city")
+        myProfile.location = kwargs.get("location")
         myProfile.Age = kwargs.get("age")
         myProfile.Gender = kwargs.get("gender")
         myProfile.save()

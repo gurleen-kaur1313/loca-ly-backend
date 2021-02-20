@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 import uuid
+from location.models import Location
 
 
 class Jobs(models.Model):
@@ -22,6 +23,7 @@ class Jobs(models.Model):
     minimumdesignation = models.TextField(null=True, blank=True)
     mobile = models.CharField(blank=True, null=True, max_length=16)
     location = models.CharField(blank=True, null=True, max_length=250)
+    rating = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
     jobtype = models.CharField(
         max_length=250, choices=JOBTYPE_CHOICES, blank=True, null=True
     )
