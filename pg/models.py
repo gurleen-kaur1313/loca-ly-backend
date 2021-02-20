@@ -51,7 +51,7 @@ class Pgs(models.Model):
     url = models.URLField(null=True, blank=True, max_length=200)
 
     def __str__(self):
-        return self.user.email
+        return self.created_by.email
 
     def save(self, *args, **kwargs):
         super(Pgs, self).save(*args, **kwargs)

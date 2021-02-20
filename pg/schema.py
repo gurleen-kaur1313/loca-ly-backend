@@ -63,7 +63,7 @@ class AddPG(graphene.Mutation):
             if location:
                 filter = Q(city__icontains=location) | Q(
                     state__icontains=location)
-            temp = Location.objects.filter(filter).first()
+                temp = Location.objects.filter(filter).first()
             # if temp:
             #     jobadd.rating=temp
             # else:
