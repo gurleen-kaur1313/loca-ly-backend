@@ -22,6 +22,31 @@ class Query(graphene.ObjectType):
     def resolve_by_id(root, info, location_city):
         return Location.objects.get(city=location_city)
 
+    def resolve_increment(self, info, city, rating):
+        try:
+            if city:
+                filter = Q(city__icontains=city)
+            temp = Location.objects.filter(filter).first()
+            temp.rating += rating
+            temp.save()
+        except:
+            temp = Location.objects.create(city=city)
+            temp.save()
+        return temp
+
+    def resolve_decrement(self, info, city, rating):
+        try:
+            if city:
+                filter = Q(city__icontains=city)
+            temp = Location.objects.filter(filter).first()
+            temp.rating -= rating
+            temp.save()
+        except:
+            temp = Location.objects.create(city=city)
+            temp.save()
+        return temp
+
+
 
 class IncrementLocation(graphene.Mutation):
     newlocation = graphene.Field(Location)
