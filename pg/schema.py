@@ -62,8 +62,19 @@ class AddPG(graphene.Mutation):
         pgadd.laundry_included = kwargs.get("laundry_included")
         pgadd.description = kwargs.get("description")
         pgadd.rent = kwargs.get("rent")
-        pgadd.location = kwargs.get("location")
         pgadd.url = kwargs.get("url")
+        try:
+            if location:
+                filter = Q(city__icontains=location) | Q(state__icontains=location) 
+            temp = Location.objects.filter(filter).first()
+            # if temp:
+            #     jobadd.rating=temp
+            # else:
+            #     temp2=Location.objects.create(city=location)
+            #     jobadd.rating=temp2
+        except:
+            temp=Location.objects.create(city=location)      
+        pgadd.location=temp 
         pgadd.save()
         return AddPG(newpg=pgadd)
 
