@@ -43,7 +43,6 @@ class AddPG(graphene.Mutation):
         kitchen_available = graphene.String()
         washroom_attached = graphene.String()
         laundry_included = graphene.String()
-        description = graphene.String()
         rent = graphene.Int()
         location = graphene.String()
         url = graphene.String()
