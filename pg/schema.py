@@ -49,6 +49,8 @@ class AddPG(graphene.Mutation):
         locality = graphene.String()
         city = graphene.String()
         state = graphene.String()
+        url = graphene.String()
+        
 
     def mutate(self, info, **kwargs):
         user = info.context.user
@@ -65,6 +67,7 @@ class AddPG(graphene.Mutation):
         pgadd.locality = kwargs.get("locality")
         pgadd.city = kwargs.get("city")
         pgadd.state = kwargs.get("state")
+        pgadd.url = kwargs.get("url")
         pgadd.save()
         return AddPG(newpg=pgadd)
 
