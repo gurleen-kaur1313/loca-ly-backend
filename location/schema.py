@@ -15,6 +15,8 @@ class locations(DjangoObjectType):
 class Query(graphene.ObjectType):
     alllocations = graphene.List(locations)
     onelocation = graphene.Field(locations, location_city=graphene.String())
+    increment = graphene.List(locations)
+    decrement = graphene.List(locations)
 
     def resolve_alllocations(self, info):
         return Location.objects.all()
@@ -26,9 +28,9 @@ class Query(graphene.ObjectType):
         try:
             if city:
                 filter = Q(city__icontains=city)
-            temp = Location.objects.filter(filter).first()
-            temp.rating += rating
-            temp.save()
+                temp = Location.objects.filter(filter).first()
+                temp.rating += rating
+                temp.save()
         except:
             temp = Location.objects.create(city=city)
             temp.save()
@@ -38,9 +40,9 @@ class Query(graphene.ObjectType):
         try:
             if city:
                 filter = Q(city__icontains=city)
-            temp = Location.objects.filter(filter).first()
-            temp.rating -= rating
-            temp.save()
+                temp = Location.objects.filter(filter).first()
+                temp.rating -= rating
+                temp.save()
         except:
             temp = Location.objects.create(city=city)
             temp.save()
