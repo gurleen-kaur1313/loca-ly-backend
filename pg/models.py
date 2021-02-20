@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 import uuid
-from location.models import Location
 
 
 class Pgs(models.Model):
@@ -46,7 +45,7 @@ class Pgs(models.Model):
         max_length=250, choices=LAUNDRY_CHOICES, blank=True, null=True
     )
     rent = models.IntegerField(null=True, blank=True)
-    location = models.CharField(bull=True,blank=True,max_length=255)
+    location = models.CharField(null=True,blank=True,max_length=255)
     url = models.URLField(null=True, blank=True, max_length=200)
 
     def __str__(self):
