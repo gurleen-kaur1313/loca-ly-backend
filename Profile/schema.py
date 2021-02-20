@@ -69,7 +69,7 @@ class CreateProfile(graphene.Mutation):
         age = graphene.Int()
         gender = graphene.String()
 
-    def mutate(self, info, **kwargs):
+    def mutate(self, info, location, **kwargs):
         user = info.context.user
         myProfile = Profile.objects.create(user=user)
         myProfile.name = kwargs.get("name")
@@ -78,7 +78,8 @@ class CreateProfile(graphene.Mutation):
         myProfile.Gender = kwargs.get("gender")
         try:
             if location:
-                filter = Q(city__icontains=location) | Q(state__icontains=location) 
+                filter = Q(city__icontains=location) | Q(
+                    state__icontains=location)
             temp = Location.objects.filter(filter).first()
             # if temp:
             #     jobadd.rating=temp
@@ -86,8 +87,8 @@ class CreateProfile(graphene.Mutation):
             #     temp2=Location.objects.create(city=location)
             #     jobadd.rating=temp2
         except:
-            temp=Location.objects.create(city=location)
-        myProfile.location=temp
+            temp = Location.objects.create(city=location)
+        myProfile.location = temp
         myProfile.save()
 
         return CreateProfile(profile=myProfile)
@@ -114,7 +115,7 @@ class UpdateProfile(graphene.Mutation):
         myProfile.Gender = kwargs.get("gender")
         # try:
         #     if location:
-        #         filter = Q(city__icontains=location) | Q(state__icontains=location) 
+        #         filter = Q(city__icontains=location) | Q(state__icontains=location)
         #     temp = Location.objects.filter(filter).first()
         #     # if temp:
         #     #     jobadd.rating=temp
@@ -126,9 +127,6 @@ class UpdateProfile(graphene.Mutation):
         myProfile.save()
 
         return UpdateProfile(profile=myProfile)
-
-
-
 
 
 class Mutation(graphene.ObjectType):
