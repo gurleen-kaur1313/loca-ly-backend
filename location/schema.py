@@ -2,6 +2,7 @@ import graphene
 from graphene.types.argument import Argument
 from graphene.types.mutation import Mutation
 from graphene_django import DjangoObjectType
+import graphql
 from .models import Location
 from graphql import GraphQLError
 from django.db.models import Q
@@ -15,16 +16,18 @@ class locations(DjangoObjectType):
 class Query(graphene.ObjectType):
     alllocations = graphene.List(locations)
     onelocation = graphene.Field(locations, location_city=graphene.String())
-    increment = graphene.List(locations)
-    decrement = graphene.List(locations)
+    increment = graphene.List(
+        locations, city=graphene.String(), rating=graphene.Int())
+    decrement = graphene.List(
+        locations, city=graphene.String(), rating=graphene.Int())
 
     def resolve_alllocations(self, info):
         return Location.objects.all()
 
-    def resolve_by_id(root, info, location_city):
+    def resolve_by_id(self,root, info, location_city):
         return Location.objects.get(city=location_city)
 
-    def resolve_increment(self, info, city, rating):
+    def resolve_increment(self,root, info, city, rating):
         try:
             if city:
                 filter = Q(city__icontains=city)
@@ -34,7 +37,7 @@ class Query(graphene.ObjectType):
         except:
             temp = Location.objects.create(city=city)
             temp.save()
-        return temp
+        return Location.objects.get(city=city)
 
     def resolve_decrement(self, info, city, rating):
         try:
@@ -46,8 +49,7 @@ class Query(graphene.ObjectType):
         except:
             temp = Location.objects.create(city=city)
             temp.save()
-        return temp
-
+        return Location.objects.get(city=city)
 
 
 class IncrementLocation(graphene.Mutation):
