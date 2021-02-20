@@ -13,7 +13,7 @@ class Jobs(models.Model):
         ("F", "Full time"),
     )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(blank=True, max_length=250, null=False)
     description = models.TextField(null=True, blank=True)
