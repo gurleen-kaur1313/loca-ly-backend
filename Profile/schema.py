@@ -69,6 +69,7 @@ class CreateProfile(graphene.Mutation):
         gender = graphene.String()
 
     def mutate(self, info, **kwargs):
+        user = info.context.user
         myProfile = Profile.objects.create(user=user)
         myProfile.name = kwargs.get("name")
         myProfile.mobile = kwargs.get("mobile")
