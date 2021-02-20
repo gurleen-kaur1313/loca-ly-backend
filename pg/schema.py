@@ -14,8 +14,15 @@ class pgss(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
+    allpgs = graphene.List(pgss)
     searchpgs = graphene.List(pgss, search=graphene.String())
     onepg = graphene.Field(pgss, pg_id=graphene.String())
+
+    def resolve_allpgs(self,info):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
+        return Pgs.objects.all()
 
     def resolve_searchpgs(self, info, search=None):
         user = info.context.user
