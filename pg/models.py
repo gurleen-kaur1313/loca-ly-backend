@@ -46,7 +46,8 @@ class Pgs(models.Model):
         max_length=250, choices=LAUNDRY_CHOICES, blank=True, null=True
     )
     rent = models.IntegerField(null=True, blank=True)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
+    location = models.ForeignKey(
+        Location, on_delete=models.CASCADE, null=True, blank=True)
     url = models.URLField(null=True, blank=True, max_length=200)
 
     def __str__(self):
