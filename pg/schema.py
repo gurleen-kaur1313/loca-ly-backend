@@ -46,8 +46,9 @@ class AddPG(graphene.Mutation):
         location = graphene.String()
         url = graphene.String()
 
-    def mutate(self, info, location, **kwargs):
+    def mutate(self, info, **kwargs):
         user = info.context.user
+        location = kwargs.get("location")
         if user.is_anonymous:
             raise GraphQLError("Not Logged In!")
         pgadd = Pgs.objects.create(created_by=user)
