@@ -26,14 +26,14 @@ class AddPoliceEmergency(graphene.Mutation):
     class Arguments:
         street = graphene.String()
         city = graphene.String()
-        locality = graphene.String()
+        state = graphene.String()
 
     def mutate(self, info, **kwargs):
         user = info.context.user
         city = kwargs.get("city")
         test = PoliceEmergency.objects.create(user=user)
         test.city = kwargs.get("city")
-        test.locality = kwargs.get("locality")
+        test.state = kwargs.get("state")
         test.street = kwargs.get("street")
         test.save()
         try:
