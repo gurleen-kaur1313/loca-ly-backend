@@ -5,6 +5,7 @@ from graphene_django import DjangoObjectType
 from .models import Pgs
 from graphql import GraphQLError
 from django.db.models import Q
+from location.models import Location
 
 
 class pgss(DjangoObjectType):
