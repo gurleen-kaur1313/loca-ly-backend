@@ -10,9 +10,9 @@ Flutter- Application
 Javascript, Node, html, css- website
 ```
 ## Authors
-Gurleen Kaur
-Harmanjit
-Kunal Khullar
+Gurleen Kaur <br></br>
+Harmanjit - @Harmanjit14<br></br>
+Kunal Khullar - @kunal-khullar
 
 ## links to other repos
 app - https://github.com/Harmanjit14/loca.ly-app
