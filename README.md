@@ -15,6 +15,7 @@ Harmanjit - @Harmanjit14<br></br>
 Kunal Khullar - @kunal-khullar
 
 ## links to other repos
+backend- https://loca-ly.herokuapp.com/admin
 app - https://github.com/Harmanjit14/loca.ly-app
 web - https://github.com/Kunal-Khullar/kuhackfest
 (app release has been attached with this repo)
