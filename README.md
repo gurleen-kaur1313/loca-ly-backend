@@ -19,3 +19,5 @@ app - https://github.com/Harmanjit14/loca.ly-app
 web - https://github.com/Kunal-Khullar/kuhackfest
 (app release has been attached with this repo)
 
+## login
+email- gurleen@why.com             password-123456
